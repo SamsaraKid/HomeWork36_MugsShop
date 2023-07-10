@@ -95,7 +95,8 @@ class Market:
 
 
 class Customer:
-    def __init__(self, money):
+    def __init__(self, name, money):
+        self.name = name
         self.money = money
         self.mugs = []
 
@@ -109,9 +110,6 @@ class Customer:
 
     def order(self, market, color, text, type, num):
         self.buy(market.order(color, text, type, num))
-
-
-
 
     def showmymugs(self):
         print('Вот что есть у меня:')
@@ -131,18 +129,31 @@ market1.add('белый', 'Никита', 'img')
 market1.showcat()
 market1.make(1, 2)
 market1.make(3, 4)
-market1.showstock()
-market1.make(1, 10)
+market1.make(2, 3)
 market1.showstock()
 
-customer1 = Customer(100)
-print('market1.budget', market1.budget, 'customer1.money', customer1.money)
-customer1.buy(market1, 3, 3)
-print('market1.budget', market1.budget, 'customer1.money', customer1.money)
-print(customer1.mugs)
+customer1 = Customer('name', 100)
+customer1.buy(market1, 3, 6)
 market1.showcat()
 market1.showstock()
 customer1.showmymugs()
 
 print('market1.budget', market1.budget, 'customer1.money', customer1.money)
+market1.order('зелёный', 'Никита', 'img', 5)
+market1.showcat()
+market1.showstock()
+
+market2 = Market(100)
+print('Добро пожаловать в магазин кружек')
+name = input('Представьтесь, пожалуйста:\n')
+money = input('Внесите сумму на ваш счёт:\n')
+customer2 = Customer(name, money)
+while True:
+    ans = int(input('Выберите действие:\n'
+                    '1 - Посмотреть каталог\n'
+                    '2 - Заказать из каталога\n'
+                    '3 - Заказать не из каталога\n'
+                    '4 - Уйти'))
+    match
+    break
 
