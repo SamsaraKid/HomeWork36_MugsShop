@@ -29,17 +29,16 @@ class Market:
     def findincat(self, color, text='', type=''):
         try:
             if isinstance(color, Mug):
-                return self.catalog.index(color)
+                return self.catalog.index(color) + 1
             else:
-                return self.catalog.index(Mug(color, text, type))
+                return self.catalog.index(Mug(color, text, type)) + 1
         except:
             return -1
 
     def findinstock(self, art):
         if self.catalog[art - 1] in self.stock:
             return len(list(filter(lambda x: x == self.catalog[art - 1], self.stock)))
-        else:
-            return 0
+        return 0
 
     def add(self, color, text, type):
         art = self.findincat(color, text, type)
@@ -48,6 +47,8 @@ class Market:
         else:
             self.catalog.append(Mug(color, text, type))
             self.pricelist.append(random.randint(1, 10))
+            art = len(self.catalog)
+        return art
 
     def showcat(self):
         print('Вот что есть в каталоге:')
@@ -86,6 +87,12 @@ class Market:
         self.budget += self.pricelist[art - 1] * num
         return mugs
 
+    def order(self, color, text, type, num):
+        art = self.add(color, text, type)
+        if self.findinstock(art) < num:
+            self.make(art, num - self.findinstock(art))
+        return art
+
 
 class Customer:
     def __init__(self, money):
@@ -99,6 +106,12 @@ class Customer:
             self.mugs.extend(market.sell(art, num))
             self.money -= market.pricelist[art - 1] * num
             return num
+
+    def order(self, market, color, text, type, num):
+        self.buy(market.order(color, text, type, num))
+
+
+
 
     def showmymugs(self):
         print('Вот что есть у меня:')
